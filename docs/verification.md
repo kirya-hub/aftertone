@@ -9,3 +9,10 @@
 - Built-in browser host unavailable; no retry. Existing Firefox used without installing browser software.
 - Visual inspection: desktop/mobile hero and approach, desktop demo. Interactive demo controls deliberately disabled at this stage.
 - Screenshots: `screenshots/stage1-{1440,390}-{hero,approach,demo,faq}.png` (local artifacts, not versioned).
+
+## Stage 2 — meaningful motion
+
+- `astro check`: 0 errors/warnings/hints. Production build passed.
+- Firefox: hero entrance; three scroll chapter states (active 0/1/2); fast bottom/top scroll; resize to 390px; desktop shell transforms reverted to identity on mobile; reduced-motion preference produced the static scene. No console errors.
+- Visual inspection: animated hero and intermediate chapter 2. Screenshots: `stage2-hero.png`, `stage2-story-{0,1,2}.png`, `stage2-mobile-story.png`, `stage2-reduced-story.png`.
+- A test initially expected CSS `none` after GSAP cleanup; Firefox correctly retained an equivalent identity SVG matrix. The assertion now accepts both representations; no movement remained.
