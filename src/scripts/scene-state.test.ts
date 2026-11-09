@@ -1,9 +1,17 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createScene, selectSource, selectedSource, setPosition, positionLabel, relativeCoordinate } from './scene-state.ts';
+import {
+  createScene,
+  selectSource,
+  selectedSource,
+  setPosition,
+  positionLabel,
+  relativeCoordinate,
+} from './scene-state.ts';
 
 test('fresh scenes are independent and reset all edited positions', () => {
-  const first = createScene(); first.sources[0].x = 80;
+  const first = createScene();
+  first.sources[0].x = 80;
   const reset = createScene();
   assert.equal(reset.sources[0].x, 29);
   assert.equal(reset.selected, 'air');
@@ -15,7 +23,8 @@ test('selection accepts known sources and preserves the state for unknown input'
   assert.equal(scene.selected, 'air');
 });
 test('movement clamps to the playable area without moving other sources or mutating input', () => {
-  const scene = createScene(); const next = setPosition(scene, 'voice', -300, 600);
+  const scene = createScene();
+  const next = setPosition(scene, 'voice', -300, 600);
   assert.deepEqual([next.sources[1].x, next.sources[1].y], [10, 90]);
   assert.deepEqual([scene.sources[1].x, scene.sources[1].y], [71, 42]);
   assert.equal(next.sources[0], scene.sources[0]);

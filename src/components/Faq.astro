@@ -1,11 +1,60 @@
 ---
 const questions = [
-  ['What is AFTERTONE?', 'AFTERTONE is a fictional spatial-audio collaboration product, presented as a frontend design prototype. It explores how sound designers, game studios, and immersive media teams might discuss sound in a shared spatial context.'],
-  ['What can I actually do in this demo?', 'You can select three sound sources, reposition them in a top-down field, inspect their relative positions, and reset the scene. Changes exist only in this page and are cleared on refresh.'],
-  ['Will I hear spatial audio?', 'No. This prototype visualizes source positions; it does not play, generate, render, or process audio. The contours are illustrative and are not acoustic measurements.'],
-  ['Can I invite my team or upload a scene?', 'Not in this prototype. Accounts, uploads, shared notes, real-time collaboration, and version history are product ideas illustrated on this page. There is no server or storage behind them.'],
-  ['Does the playground work without dragging?', 'Yes. Select a source with Tab and Enter or Space, then use the arrow keys to move it. Hold Shift for larger steps. The labeled position sliders offer an alternative on keyboard and touch devices.'],
-  ['Is AFTERTONE available to buy?', 'No. There is no commercial product, paid plan, or waitlist. The playground is here to make the design concept tangible — no sign-up required.']
+  [
+    'What is AFTERTONE?',
+    'AFTERTONE is a fictional spatial-audio collaboration product, presented as a frontend design prototype. It explores how sound designers, game studios, and immersive media teams might discuss sound in a shared spatial context.',
+  ],
+  [
+    'What can I actually do in this demo?',
+    'You can select three sound sources, reposition them in a top-down field, inspect their relative positions, and reset the scene. Changes exist only in this page and are cleared on refresh.',
+  ],
+  [
+    'Will I hear spatial audio?',
+    'No. This prototype visualizes source positions; it does not play, generate, render, or process audio. The contours are illustrative and are not acoustic measurements.',
+  ],
+  [
+    'Can I invite my team or upload a scene?',
+    'Not in this prototype. Accounts, uploads, shared notes, real-time collaboration, and version history are product ideas illustrated on this page. There is no server or storage behind them.',
+  ],
+  [
+    'Does the playground work without dragging?',
+    'Yes. Select a source with Tab and Enter or Space, then use the arrow keys to move it. Hold Shift for larger steps. The labeled position sliders offer an alternative on keyboard and touch devices.',
+  ],
+  [
+    'Is AFTERTONE available to buy?',
+    'No. There is no commercial product, paid plan, or waitlist. The playground is here to make the design concept tangible — no sign-up required.',
+  ],
 ];
 ---
-<section id="faq" class="faq wrap" aria-labelledby="faq-title"><div class="faq-heading"><span class="mono">05 / A FEW THINGS TO KNOW</span><h2 id="faq-title">Good<br /><em>questions.</em></h2><p>A little clarity before<br />you step into the scene.</p></div><div class="faq-list">{questions.map(([q,a],i)=><details><summary><span class="faq-number mono">0{i+1}</span><span>{q}</span><span class="faq-plus" aria-hidden="true">+</span></summary><div class="faq-answer"><p>{a}</p></div></details>)}</div></section>
+
+<section id="faq" class="faq wrap" aria-labelledby="faq-title">
+  <div class="faq-heading">
+    <span class="mono">05 / A FEW THINGS TO KNOW</span>
+    <h2 id="faq-title">
+      Good
+      <br />
+      <em>questions.</em>
+    </h2>
+    <p>
+      A little clarity before
+      <br />
+      you step into the scene.
+    </p>
+  </div>
+  <div class="faq-list">
+    {questions.map(([q, a], i) => (
+      <details>
+        <summary>
+          <span class="faq-number mono">0{i + 1}</span>
+          <span>{q}</span>
+          <span class="faq-plus" aria-hidden="true">
+            +
+          </span>
+        </summary>
+        <div class="faq-answer">
+          <p>{a}</p>
+        </div>
+      </details>
+    ))}
+  </div>
+</section>
