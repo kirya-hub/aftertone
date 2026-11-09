@@ -11,7 +11,7 @@
     "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview --host 127.0.0.1",
     "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
-    "test": "node --experimental-strip-types --test src/scripts/scene-state.test.ts",
+    "test": "node --experimental-strip-types src/scripts/scene-state.test.ts",
     "test:browser": "node scripts/verify-browser.mjs",
     "measure": "node scripts/measure.mjs"
   },
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.12",
+    "@types/node": "24.19.2",
     "typescript": "6.0.3"
   }
 }

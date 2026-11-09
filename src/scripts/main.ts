@@ -1,7 +1,15 @@
 import { initMotion } from './motion';
+import { initDemo } from './demo';
+import { initNavigation } from './navigation';
 
 let dispose: (() => void) | undefined;
-function mount() { dispose?.(); dispose = initMotion(); }
+function mount() {
+  dispose?.();
+  const cleanups = [initMotion(), initNavigation()];
+  const demo = document.querySelector<HTMLElement>('[data-demo]');
+  if (demo) cleanups.push(initDemo(demo));
+  dispose = () => cleanups.forEach(cleanup => cleanup());
+}
 mount();
 function onPageHide() { dispose?.(); dispose = undefined; }
 function onPageShow(event: PageTransitionEvent) { if (event.persisted) mount(); }
