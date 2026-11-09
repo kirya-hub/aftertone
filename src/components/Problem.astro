@@ -1,0 +1,11 @@
+<section id="approach" class="problem section-light" aria-labelledby="problem-title">
+  <div class="wrap">
+    <div class="section-kicker mono"><span>01 / A DIFFERENT DIMENSION</span><span>SOUND IS A PLACE, TOO.</span></div>
+    <div class="problem-intro"><h2 id="problem-title" data-reveal>You can’t describe<br />depth on a <em>flat line.</em></h2><p>“A little further back.” Behind what?<br /><br />When the scene is spatial but the feedback isn’t, the most important detail gets lost: where a sound belongs.</p></div>
+    <div class="comparison">
+      <div class="flat-demo"><div class="demo-label mono"><span>THE USUAL CONVERSATION</span><span>2D</span></div><div class="timeline-tracks" aria-hidden="true">{['ATMOSPHERE','VOICE','SIGNAL'].map((label,i)=><div class="track"><span>{label}</span><div class="waveform">{Array.from({length:45},(_,j)=><i style={`height:${8+Math.abs(Math.sin(j*2.3+i)*Math.cos(j*.4))*24}px`}/>)}</div></div>)}</div><span class="flat-comment">“Can we move this… somewhere?”</span></div>
+      <div class="spatial-comparison"><div class="demo-label mono"><span>A SHARED FRAME OF REFERENCE</span><span>3D</span></div><svg viewBox="0 0 500 200" fill="none" aria-label="A note attached to a precise position in a spatial scene"><g stroke="currentColor" opacity=".25">{[45,70,95,120].map(r=><ellipse cx="240" cy="118" rx={r*1.5} ry={r*.5}/>)}<path d="M40 118h400M240 48v138"/></g><path d="m240 118 97-53" stroke="#675248" stroke-dasharray="3 5"/><circle cx="337" cy="65" r="7" fill="#A9442D"/><circle cx="240" cy="118" r="5" fill="currentColor"/><path d="m235 130 5-7 5 7" stroke="currentColor"/></svg><span class="spatial-comment"><i></i> “Right here. Just behind the listener.”</span></div>
+    </div>
+    <div class="problem-footer"><span class="mono">LESS TRANSLATION. MORE UNDERSTANDING.</span><p>Give every conversation a coordinate.</p><a href="#experience" aria-label="Discover the spatial experience">↘</a></div>
+  </div>
+</section>

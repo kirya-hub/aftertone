@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+.tools/
+.env
+.env.*
+*.log
+screenshots/*.png
