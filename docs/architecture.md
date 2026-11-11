@@ -1,31 +1,27 @@
-# AFTERTONE / Acoustic Stage
+# AFTERTONE — архитектура полной выставки
 
-Approved: Astro + TypeScript + GSAP/ScrollTrigger, static output. No backend, framework islands, canvas, authentication, storage, audio, or deployment.
+Реализован вариант B из [утверждённой Phase A](full-experience-phase-a.md). Astro static + TypeScript + GSAP. Добавлены точно закреплённые `three` и `@types/three` 0.187.0. Нет backend, хранилища, React, аудио или внешних runtime-запросов.
 
-## Boundaries
+## Границы
 
-- Astro components own semantic content and static SVG illustrations. HTML is complete without JS.
-- CSS owns layout, native sticky positioning, responsive design, focus and disclosure states.
-- `motion.ts` owns GSAP choreography and responsive/reduced-motion cleanup.
-- `scene-state.ts` owns bounded source coordinates, selection and position descriptions; pure functions make meaningful behavior testable.
-- `demo.ts` owns pointer/keyboard/range bindings and synchronizes a single demo instance with its SVG and inspector.
-- `main.ts` initializes and cleans up the page modules.
+- `ImmersiveHero.astro` и `immersive-hero.ts` сохранены побайтно. Hero сам управляет своим WebGL1-контекстом и lifecycle.
+- `Journey.astro` — семантические пять глав, DOM scene-slots, текст и доступное управление. Небольшой массив описывает контент; сцены имеют разные композиции через CSS, а не универсальный UI-builder.
+- `exhibition/index.ts` — lazy import при приближении к Journey и защита от завершения import после disposal.
+- `renderer.ts` — один WebGL2 canvas, viewport/scissor по полным DOM bounds с clipping видимой части; event-driven invalidation, context loss/restoration, ResizeObserver и visibility cleanup.
+- `scenes.ts` — процедурные ленты с замкнутой оболочкой, 16 инстансированных рёбер камеры, три соосные perspective-апертуры, три открытых переплетённых пути Common Ground и финальная дуга с двумя удаляющимися следами. Камера использует 9 draw calls вместо 48 отдельных mesh. Геометрия и normals вычисляются при создании сцены, анимация меняет group/camera/material.
+- `state.ts` — границы азимута, presets, toggle-selection. `fallback.ts` — переключение реальных poster-ракурсов без WebGL.
+- `exhibition.css` — scoped layout, typography, controls, mobile/reduced-motion. Старый global CSS и архивная motion-система сохраняются для прототипов.
 
-Fonts: self-hosted Manrope (editorial geometric display and readable body) and IBM Plex Mono (coordinates, source IDs, instrumentation). Original SVG/CSS diagrams, no external image dependencies. No commercial claims, testimonials or invented customer metrics. Capability demonstrations are explicitly conceptual.
+## Рендер и ресурсы
 
-## Motion map
+Canvas прозрачен вне видимых scene-slots, не принимает pointer events. DOM принимает жесты и владеет focus. Сцены дальше 500px от viewport уничтожаются; их shared environment принадлежит renderer. При близком стыке несколько scene regions рисуются в одном контексте.
 
-1. Hero: a short shell/source/label entrance; headline is visible immediately.
-2. Section reveals: shallow translation, never hiding primary content.
-3. Spatial narrative: native sticky visual beside three readable chapters, scroll-linked source movement, shell perspective, contour stroke and orbit. Mobile uses the same static scene and readable text with smaller reveals. No ScrollTrigger pin, no scroll hijacking.
-4. Playground: user-driven source positions; selected state, connection lines and text reflect actual state. No fake audio control.
-5. Reduced motion: no GSAP choreography, native instant anchors, all information still present. No endless timelines.
+Нет бесконечного animation loop: scroll/resize/явный ввод вызывают invalidate, requestAnimationFrame объединяет события. Hidden document прекращает кадры. `pagehide`, BFCache, HMR очищают и восстанавливают модули. AbortController снимает listeners; геометрия/material/environment/renderer освобождаются при disposal. При context loss видны posters и preset-переключение, при restoration GPU-ресурсы создаются заново.
 
-## Stages and acceptance
+После visual polish материал — MeshPhysicalMaterial с clearcoat, умеренной metalness и transmission, толщиной/attenuation и локальным PMREM-окружением из четырёх цветных softbox-плоскостей. Ленты имеют переднюю и заднюю поверхности, боковые стенки и торцы открытых путей. Transmission используется выборочно вне многослойной Chamber и использует половинное разрешение промежуточного буфера; это растровая экранная рефракция Three.js, без ray tracing и без гарантии корректного многослойного преломления. Основная глубина создаётся перспективой, отражениями и перекрытием реальной геометрии. Постпроцессинг не добавлен. Hero использует прежний независимый материал и не изменён.
 
-1. Static content, visual system, responsive composition. Astro check + build + initial browser review.
-2. Responsive GSAP lifecycle. Check + build + story/scroll/reduced-motion browser review.
-3. Demo and supporting interactions. State tests + check + build + keyboard/pointer browser tests.
-4. Production browser matrix, measured asset budgets, documented limitations, final checks and commit.
+DPR ограничен 2 desktop / 1.5 mobile. Только при явно определённом software renderer (`llvmpipe`, `SwiftShader`, `software`) применяется scale 0.65: реакция на подтверждённый риск медленного программного рендера, без изменения объектов и desktop hardware-режима. Для подтверждённого software backend экранная transmission отключена; оболочки используют 180 сегментов / 8 поперечных делений вместо аппаратных 240 / 10, сохраняя траектории, толщину, цветное окружение и clearcoat. Это не гарантия 60 FPS.
 
-Native controls and static fallback reduce accessibility and failure risk. All dependencies are local and locked. Scene state is transient; no data is sent. SVG avoids a rendering engine and heavy media transfer. No infrastructure cost or remote services are required.
+## История и архивы
+
+Главная теперь использует выставку. Старое дерево страницы перенесено в `/archive/`; A/B routes импортируют архив вместо новой главной. Header и Layout получают явный `exhibition` prop; их поведение по умолчанию остаётся прежним. HeroDirections, остальные старые секции и reference materials сохранены.

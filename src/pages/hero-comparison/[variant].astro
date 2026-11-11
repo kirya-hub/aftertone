@@ -1,0 +1,14 @@
+---
+import Page from '../archive.astro';
+
+// Local review routes. No variant switcher is added to the product navigation.
+export function getStaticPaths() {
+  return ['a', 'b'].map((variant) => ({ params: { variant }, props: { variant } }));
+}
+interface Props {
+  variant: 'a' | 'b';
+}
+const { variant } = Astro.props;
+---
+
+<Page heroVariant={variant} />

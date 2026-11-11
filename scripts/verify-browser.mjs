@@ -41,8 +41,8 @@ try {
     );
     await b.shot(`final-${w}-hero`);
     if (w <= 600) {
-      await b.scroll('.hero-art', -90);
-      await b.shot(`final-${w}-hero-field`);
+      await b.scroll('.resonance-scene', -90);
+      await b.shot(`final-${w}-hero-resonance`);
     }
     for (const [selector, name, offset] of [
       ['#approach', 'approach', 0],

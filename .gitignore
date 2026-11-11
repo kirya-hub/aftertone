@@ -1,8 +1,37 @@
+# Dependencies and generated build output
 node_modules/
 dist/
 .astro/
 .tools/
+.cache/
+coverage/
+*.tsbuildinfo
+
+# Environment files, credentials and local agent settings
 .env
 .env.*
+*.pem
+*.key
+/.agents/
+/.codex/
+/.aws/
+
+# Temporary browser profiles, logs and test artifacts
 *.log
-screenshots/*.png
+*.tmp
+/tmp/
+/temp/
+aftertone-firefox*/
+.firefox-profile*/
+geckodriver-profile*/
+/test-results/
+/playwright-report/
+/screenshots/
+/references_pic/
+
+# Retain architecture and the approved plan; keep review artifacts local
+/docs/*
+!/docs/architecture.md
+!/docs/full-experience-phase-a.md
+
+.DS_Store

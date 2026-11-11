@@ -1,0 +1,56 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import HeroDirections from '../../components/HeroDirections.astro';
+import ImmersiveHero from '../../components/ImmersiveHero.astro';
+import Problem from '../../components/Problem.astro';
+import Experience from '../../components/Experience.astro';
+import Demo from '../../components/Demo.astro';
+import Capabilities from '../../components/Capabilities.astro';
+import Faq from '../../components/Faq.astro';
+import Closing from '../../components/Closing.astro';
+import Footer from '../../components/Footer.astro';
+
+// Local review only: no selection or new styles are applied to the homepage.
+export function getStaticPaths() {
+  return [
+    'refined-spatial',
+    'immersive-experience',
+    'experimental-editorial',
+    'immersive-experience-before',
+  ].map((direction) => ({
+    params: { direction },
+    props: {
+      direction: direction === 'immersive-experience-before' ? 'immersive-experience' : direction,
+      previous: direction === 'immersive-experience-before',
+    },
+  }));
+}
+interface Props {
+  previous?: boolean;
+  direction: 'refined-spatial' | 'immersive-experience' | 'experimental-editorial';
+}
+const { direction, previous } = Astro.props;
+---
+
+<Layout>
+  <Header />
+  <main id="main" tabindex="-1">
+    {direction === 'immersive-experience' && !previous ? (
+      <ImmersiveHero />
+    ) : (
+      <HeroDirections direction={direction} />
+    )}
+    <Problem />
+    <Experience />
+    <Demo />
+    <Capabilities />
+    <Faq />
+    <Closing />
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  import '../../scripts/main';
+</script>

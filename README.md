@@ -1,78 +1,69 @@
 # AFTERTONE
 
-Премиальный frontend-прототип вымышленного SaaS для совместной работы с пространственным звуком. Визуальное направление — **Acoustic Stage**: редакционная типографика, проецированные SVG-контуры, источники и точка прослушивания.
+An interactive spatial exhibition exploring how a signal becomes a sense of place. Six chapters combine typography, procedural sculptures and scroll-driven motion, with direct controls for perspective and shared paths.
 
-**Astro · TypeScript · GSAP / ScrollTrigger · CSS · SVG.** Статический сайт без backend, аккаунтов, загрузок, платежей, аудиодвижка и внешних сервисов. Ничего не опубликовано.
+This is a visual concept: it does not process audio or provide accounts, collaboration services or a backend.
 
-## Запуск
+## Chapters
 
-Требуется **Node.js 24.22.1** (зафиксирован в `.node-version`). В текущем окружении он уже установлен локально:
+| Chapter              | Experience                                                                                                |
+| -------------------- | --------------------------------------------------------------------------------------------------------- |
+| Immersive Experience | A WebGL sculpture introduces the exhibition and responds to the pointer.                                  |
+| The Trace            | A ribbon emerges as the first spatial gesture.                                                            |
+| Resonance Chamber    | Scrolling changes the camera through a layered chamber.                                                   |
+| A Different Here     | Explore the sculpture with horizontal dragging, a keyboard-accessible slider, three viewpoints and Reset. |
+| Common Ground        | Select and deselect three independent, intertwined paths.                                                 |
+| Afterglow            | A closing sculpture returns the exhibition to a quiet sense of place.                                     |
 
-```bash
-cd /home/fefe/promptProjects/saas-landing
-export PATH="/home/fefe/promptProjects/tasks/.tools/node/bin:$PATH"
-node --version # v24.22.1
+## Stack
+
+Astro static output, TypeScript, GSAP/ScrollTrigger and Three.js. The Hero owns a native WebGL renderer; the remaining chapters share one Three.js canvas. Fonts and fallback images are served locally.
+
+## Getting started
+
+Use **Node.js 24.22.1** (see `.node-version`) and npm. Dependency versions are pinned in `package-lock.json`.
+
+```sh
 npm ci
 npm run dev
 ```
 
-Открыть **http://127.0.0.1:4321**. `npm ci` нужен при первом запуске или изменении lockfile; зависимости уже установлены в этой рабочей папке. Системный Node.js 18 не подходит. На другой машине используйте Node.js из `.node-version` через ваш менеджер версий.
+Open <http://127.0.0.1:4321>. Development and preview servers bind to loopback; project commands disable Astro telemetry.
 
-Production-версия:
+## Production build
 
-```bash
+```sh
 npm run build
-npm run preview -- --port 4173
+npm run preview
 ```
 
-Открыть **http://127.0.0.1:4173**. Astro 7 запускает сервер фоновым процессом; остановка: `ASTRO_TELEMETRY_DISABLED=1 npx astro dev stop` / `ASTRO_TELEMETRY_DISABLED=1 npx astro preview stop`. Телеметрия отключена только в командах проекта, глобальные настройки не меняются.
+The static output is written to `dist/`. Preview runs locally at <http://127.0.0.1:4321>; use `npm run preview -- --port 4173` to choose another port. These commands do not publish or deploy the site.
 
-## Навигация и демо
+## Checks
 
-- **The approach** — сравнение плоских дорожек и пространственного контекста.
-- **In space** — три главы; на desktop сцена меняет перспективу и отношения между источниками при естественной прокрутке.
-- **Enter / Explore the playground** — переход к интерактивному полю.
-- Выберите Atmosphere, Voice или Signal. Перетащите маркер, используйте стрелки на выбранном маркере или подписанные ползунки. **Shift + стрелка** перемещает на пять шагов. Все источники также доступны через переключатель над инспектором, даже если маркеры совпадают.
-- **Reset the scene** восстанавливает начальное состояние. Изменения не сохраняются после refresh. Контуры и координаты иллюстративны и не являются акустическими расчётами.
-- **Capabilities** — три разные иллюстрации концептуальных функций. **Questions** — нативные раскрывающиеся ответы.
-
-Без JavaScript остаются весь контент, SVG, якоря, мобильная навигация и FAQ; контролы демо отключены с пояснением. Reduced motion отключает GSAP-хореографию и плавные якорные переходы. На экранах до 800 px пространственный рассказ статичен, главы доступны последовательно.
-
-## Проверки
-
-```bash
-npm run check          # Astro + строгий TypeScript
-npm test               # 5 тестов состояния без отдельного test framework
-npm run format:check   # Prettier + Astro plugin (это не ESLint)
-npm run build
-npm run measure        # реальные raw/gzip размеры dist → docs/performance.json
+```sh
+npm run check
+npm test
+npm run format:check
 ```
 
-Для браузерной проверки используются уже установленные Firefox и geckodriver; Selenium, Playwright и новый браузер не устанавливались:
+Optional full Firefox verification, after building:
 
-```bash
-geckodriver --host 127.0.0.1 --port 4445
-# В другом терминале, с Node.js 24 в PATH и работающим preview:
+```sh
 npm run test:browser
-node scripts/verify-demo.mjs
 ```
 
-По умолчанию тесты открывают `http://127.0.0.1:4173`, WebDriver — `http://127.0.0.1:4445`. Переопределение: `AFTERTONE_URL` и `WEBDRIVER_URL`. Скрипт `browser.mjs` проверяет точный CSS viewport через Firefox BiDi и собирает сообщения консоли. В ограниченном sandbox подключение к loopback может требовать разрешения.
+The browser runner requires already installed Firefox and geckodriver. It finds the binaries, selects free loopback ports and cleans up temporary browser profiles and processes. Override discovery with `FIREFOX_BINARY` and `GECKODRIVER_BINARY` when needed. Generated reports and screenshots stay local.
 
-- [Архитектура и motion map](docs/architecture.md)
-- [Фактические результаты проверок](docs/verification.md)
-- [Браузерные результаты и доступные метрики](docs/browser-results.json)
-- [Размеры ресурсов](docs/performance.json)
-- Скриншоты: `screenshots/final-{1440,1280,768,390,360}-{hero,approach,experience,story-mid,story-end,demo,notes,context,evolution,faq,closing,footer}.png`. На мобильных также `hero-field`, `inspector`, `menu`. Артефакты локальные, PNG исключены из Git.
+## Interaction and fallbacks
 
-## Устройство проекта
+Chapter links work as native anchors. Perspective supports horizontal dragging, keyboard input and Front / Within / Above presets. Common Ground buttons toggle each path. Reduced motion keeps static compositions and explicit controls. Without WebGL, exported posters preserve the chapters and preset viewpoints; without JavaScript, the exhibition remains readable with native navigation.
 
-Секции находятся в `src/components`; `scene-state.ts` содержит чистую модель поля, `demo.ts` — ввод и рендер состояния, `motion.ts` — GSAP-контексты, `navigation.ts` — закрытие мобильного меню. Нативная CSS sticky-сцена не требует ScrollTrigger pinning. `main.ts` очищает модули на pagehide/HMR и восстанавливает их при возврате из BFCache.
+The earlier concept is preserved at `/archive/`; `/hero-comparison/` and `/hero-directions/` contain historical prototypes.
 
-Manrope и IBM Plex Mono размещены локально в WOFF2. Лицензии шрифтов — в `public/fonts`. Растровых изображений и сторонних трекеров нет. Все npm-версии закреплены в `package-lock.json`.
+## Documentation and limits
 
-## Границы проверки
+- [Architecture](docs/architecture.md)
+- [Approved exhibition plan](docs/full-experience-phase-a.md)
 
-Браузерная автоматизация выполняется в Firefox на локальной машине. Touch проверяется эмулированными pointer actions, а не физическим телефоном. Другие движки, реальные мобильные устройства, скринридеры и замедленные сети не проверялись. Числа производительности относятся только к указанному локальному запуску; FPS и Lighthouse score не заявляются. LCP/CLS публикуются только при наличии соответствующих Performance API в браузере.
-
-Независимая проверка в другом агенте или сессии не выполнялась согласно заданию; выполнены собственный просмотр кода и браузерные проверки.
+The final review covered desktop/mobile Firefox, navigation, controls, reduced motion and fallbacks. Physical-device touch scrolling, Safari/Chromium and hardware-GPU performance have not been verified. Three.js produces a nonblocking bundle-size warning. Browser evidence and intermediate comparisons are retained locally and excluded from the release files.

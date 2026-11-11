@@ -22,49 +22,34 @@ export function initMotion(): () => void {
   };
 
   media.add('(prefers-reduced-motion: no-preference)', () => {
-    const desktop = window.matchMedia('(min-width: 801px)').matches;
-    if (window.scrollY < 100 && !window.location.hash) {
-      const entrance = gsap.timeline({ defaults: { ease: 'power3.out' } });
-      entrance
-        .from('.hero h1 > span', { y: 20, duration: 0.9, stagger: 0.09 }, 0)
-        .from(
-          '.hero-copy > p, .hero-note',
-          { y: 14, opacity: 0.7, duration: 0.8, stagger: 0.08 },
-          0.2,
-        )
-        // CTA hover owns transform in CSS; GSAP changes only its opacity.
-        .from('.hero-copy > .button', { opacity: 0.7, duration: 0.8, clearProps: 'opacity' }, 0.28)
-        .from(
-          '.hero-art .field-shell',
-          { scaleY: 0.78, y: 35, transformOrigin: '50% 80%', opacity: 0.25, duration: 1.5 },
-          0.05,
-        )
-        .from(
-          '.hero-art .field-source',
-          { y: 18, opacity: 0.15, duration: 0.9, stagger: 0.15 },
-          0.4,
-        )
-        .from(
-          '.hero-art .field-heading, .hero-art .field-caption',
-          { opacity: 0.25, duration: 0.7, stagger: 0.15 },
-          0.75,
-        );
-      if (desktop) {
-        document.querySelectorAll<SVGPathElement>('.field-hero .contour').forEach((path, index) => {
-          const length = path.getTotalLength();
-          entrance.fromTo(
-            path,
-            { strokeDasharray: length, strokeDashoffset: length },
-            {
-              strokeDashoffset: 0,
-              duration: 1.5,
-              ease: 'power2.inOut',
-              clearProps: 'strokeDasharray,strokeDashoffset',
-            },
-            0.1 + index * 0.009,
+    // Comparison compositions own their Hero motion; keep the Neon sequence local.
+    if (document.querySelector('.hero-neon')) {
+      if (window.scrollY < 100 && !window.location.hash) {
+        // Reveal the physical form before settling the foreground typography.
+        gsap
+          .timeline({ defaults: { ease: 'power3.out' } })
+          .from('.resonance-depth', { scale: 1.08, rotation: -5, opacity: 0.45, duration: 1.6 }, 0)
+          .from('.hero h1 > span', { y: 20, opacity: 0.6, duration: 0.95, stagger: 0.09 }, 0.12)
+          .from(
+            '.neon-description, .neon-note',
+            { y: 12, opacity: 0.4, duration: 0.8, stagger: 0.08 },
+            0.35,
+          )
+          .from('.neon-button', { opacity: 0.5, duration: 0.8, clearProps: 'opacity' }, 0.4)
+          .from(
+            '.neon-session, .resonance-label',
+            { y: 14, opacity: 0, duration: 0.9, stagger: 0.1 },
+            0.65,
           );
-        });
       }
+      // As the listener moves through the page, the sound sculpture moves on a
+      // slower depth plane. Transform-only; never hides content, no continuous loop.
+      gsap.to('.resonance-scene', {
+        yPercent: 10,
+        rotation: 4,
+        ease: 'none',
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.6 },
+      });
     }
     gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((element) => {
       gsap.from(element, {
@@ -80,11 +65,6 @@ export function initMotion(): () => void {
   });
 
   media.add('(min-width: 801px) and (prefers-reduced-motion: no-preference)', () => {
-    gsap.to('.field-hero', {
-      y: -24,
-      ease: 'none',
-      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.6 },
-    });
     const shell = '.field-story .field-shell';
     const air = '.field-story .source-air';
     const voice = '.field-story .source-voice';

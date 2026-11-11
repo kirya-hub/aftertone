@@ -1,0 +1,169 @@
+---
+const chapters = [
+  {
+    id: 'approach',
+    scene: 'trace',
+    number: '01',
+    name: 'THE TRACE',
+    title: 'Before a place,',
+    accent: 'a trace.',
+    copy: 'A single gesture. An edge of light. Something begins to occupy the dark.',
+    note: 'FROM SIGNAL TO SURFACE',
+    word: 'EMERGE',
+  },
+  {
+    id: 'experience',
+    scene: 'chamber',
+    number: '02',
+    name: 'RESONANCE CHAMBER',
+    title: 'A signal becomes',
+    accent: 'a space.',
+    copy: 'Move beyond the surface. Distance changes the feeling.',
+    note: 'THROUGH THE INNER FIELD',
+    word: 'WITHIN',
+  },
+  {
+    id: 'demo',
+    scene: 'perspective',
+    number: '03',
+    name: 'A DIFFERENT HERE',
+    title: 'The same space.',
+    accent: 'Another feeling.',
+    copy: 'Three paths. One opening. Change where you stand, and watch the relationship change.',
+    note: 'YOUR POINT OF VIEW',
+    word: 'SHIFT',
+  },
+  {
+    id: 'common-ground',
+    scene: 'common',
+    number: '04',
+    name: 'COMMON GROUND',
+    title: 'Separate paths.',
+    accent: 'A shared space.',
+    copy: 'Not the same direction. Not the same beginning. A place made possible by the space between.',
+    note: 'INDEPENDENT. INTERCONNECTED.',
+    word: 'TOGETHER',
+  },
+  {
+    id: 'afterglow',
+    scene: 'afterglow',
+    number: '05',
+    name: 'AFTERGLOW',
+    title: 'What remains is',
+    accent: 'a sense of place.',
+    copy: 'The form moves on. The feeling stays.',
+    note: 'AN ENDING. ANOTHER BEGINNING.',
+    word: 'REMAIN',
+  },
+];
+---
+
+<div class="journey" data-journey>
+  <canvas class="journey-canvas" aria-hidden="true"></canvas>
+  {chapters.map((c) => (
+    <section
+      id={c.id}
+      class:list={['chapter', `chapter-${c.scene}`]}
+      data-chapter={c.scene}
+      aria-labelledby={`${c.id}-title`}
+    >
+      <div class="chapter-bar">
+        <span>
+          {c.number} / {c.name}
+        </span>
+        <span>AFTERTONE — SPATIAL STUDIES</span>
+      </div>
+      <div class="chapter-heading">
+        <h2 id={`${c.id}-title`}>
+          {c.title}
+          <br />
+          <em>{c.accent}</em>
+        </h2>
+        <p>{c.copy}</p>
+      </div>
+      <div class="scene-track">
+        <div
+          class="scene-slot"
+          data-scene={c.scene}
+          aria-label={`${c.name}: a visual spatial sculpture`}
+        >
+          <img
+            class="scene-poster"
+            src={`/exhibition/${c.scene}.webp`}
+            srcset={`/exhibition/${c.scene}-600.webp 600w, /exhibition/${c.scene}-1000.webp 1000w, /exhibition/${c.scene}.webp 1440w`}
+            sizes="100vw"
+            alt=""
+            width="1440"
+            height="1000"
+            loading="lazy"
+          />
+          <span class="scene-word" aria-hidden="true">
+            {c.word}
+          </span>
+          <span class="scene-coordinate" aria-hidden="true">
+            {c.number} / X · Y · Z
+          </span>
+        </div>
+      </div>
+      {c.scene === 'perspective' && (
+        <div class="exhibit-controls" data-perspective-controls>
+          <div class="preset-buttons" role="group" aria-label="Point of view">
+            {['Front', 'Within', 'Above'].map((name, i) => (
+              <button disabled data-preset={i} aria-pressed={i === 0 ? 'true' : 'false'}>
+                {name}
+              </button>
+            ))}
+          </div>
+          <label class="angle-control">
+            VIEW ANGLE{' '}
+            <input
+              disabled
+              type="range"
+              min="-65"
+              max="65"
+              value="0"
+              step="1"
+              aria-label="View angle"
+            />
+            <output data-angle>0°</output>
+          </label>
+          <button disabled data-reset>
+            Reset ↺
+          </button>
+          <p class="control-hint">
+            Drag sideways or choose a point of view. <span data-render-status>Static view.</span>
+          </p>
+        </div>
+      )}
+      {c.scene === 'common' && (
+        <div class="path-controls" role="group" aria-label="Explore a path">
+          {['01 / Origin', '02 / Encounter', '03 / Continuum'].map((name, i) => (
+            <button disabled data-path={i} aria-pressed="false">
+              {name}
+              <span aria-hidden="true">↗</span>
+            </button>
+          ))}
+        </div>
+      )}
+      <div class="chapter-bottom">
+        <span>{c.note}</span>
+        <span>{c.number} — 05</span>
+      </div>
+      {c.scene === 'afterglow' && (
+        <footer class="exhibition-footer">
+          <div>
+            <a href="#main">Back to the beginning ↑</a>
+            <a href="#demo">Explore again ↗</a>
+          </div>
+          <p>A visual exploration of spatial sound. No audio playback.</p>
+          <span>AFTERTONE © 2026 / AN INTERACTIVE EXHIBITION</span>
+        </footer>
+      )}
+    </section>
+  ))}
+  <noscript>
+    <p class="exhibition-noscript">
+      Static exhibition. Enable JavaScript to explore the sculptures interactively.
+    </p>
+  </noscript>
+</div>

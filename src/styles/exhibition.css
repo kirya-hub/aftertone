@@ -1,0 +1,519 @@
+body.exhibition {
+  background: #080910;
+  color: #f5f1fa;
+}
+.journey {
+  position: relative;
+  isolation: isolate;
+  background: #080910;
+}
+.journey-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.chapter {
+  position: relative;
+  padding: 36px var(--gutter) 0;
+  scroll-margin-top: 20px;
+  overflow: clip;
+}
+.chapter-bar,
+.chapter-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  font: 10px/1.7 var(--mono);
+  letter-spacing: 0.1em;
+  color: #b9b4ca;
+  position: relative;
+  z-index: 2;
+}
+.chapter-bar {
+  border-top: 1px solid #b9b4ca29;
+  padding-top: 22px;
+}
+.chapter-heading {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+  margin-top: 90px;
+}
+.chapter h2 {
+  font-size: clamp(64px, 7.6vw, 128px);
+  font-weight: 450;
+  line-height: 1.02;
+  letter-spacing: -0.065em;
+}
+.chapter h2 em {
+  color: #d9cbf5;
+}
+.chapter-heading p {
+  color: #b9b4ca;
+  font-size: 16px;
+  line-height: 1.9;
+  max-width: 310px;
+  margin-top: 30px;
+}
+.scene-track {
+  position: relative;
+  z-index: 1;
+  margin: 0 calc(-1 * var(--gutter));
+}
+.scene-slot {
+  position: relative;
+  height: 640px;
+  touch-action: pan-y;
+}
+.scene-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.scene-slot[data-live] .scene-poster {
+  visibility: hidden;
+}
+.scene-word {
+  position: absolute;
+  font-size: clamp(80px, 18vw, 300px);
+  font-weight: 600;
+  letter-spacing: -0.075em;
+  color: #b4a1ee08;
+  left: 4%;
+  bottom: 8%;
+  line-height: 1;
+  pointer-events: none;
+}
+.scene-coordinate {
+  position: absolute;
+  bottom: 35px;
+  right: var(--gutter);
+  font: 10px var(--mono);
+  color: #b9b4ca;
+}
+.chapter-bottom {
+  padding: 25px 0 40px;
+}
+.chapter-trace .chapter-heading {
+  margin-bottom: -120px;
+}
+.chapter-trace .scene-slot {
+  height: 680px;
+}
+.chapter-trace .chapter-heading p {
+  margin-left: auto;
+  margin-top: -80px;
+}
+.chapter-chamber .chapter-heading {
+  text-align: center;
+  margin-top: 85px;
+}
+.chapter-chamber .chapter-heading p {
+  margin: 25px auto 0;
+}
+.chapter-chamber .scene-track {
+  height: 1150px;
+  margin-top: 40px;
+}
+.chapter-chamber .scene-slot {
+  height: 760px;
+  position: sticky;
+  top: 0;
+}
+.chapter-chamber {
+  overflow: visible;
+}
+.chapter-perspective .chapter-heading {
+  margin-top: 58px;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+.chapter-perspective .chapter-heading p {
+  margin: 0 0 5px 40px;
+}
+.chapter-perspective .scene-slot {
+  height: 650px;
+  cursor: ew-resize;
+}
+.exhibit-controls {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 26px;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 0 auto 60px;
+  padding: 22px;
+  border-top: 1px solid #b9b4ca50;
+  border-bottom: 1px solid #b9b4ca50;
+  background: #080910;
+}
+.exhibit-controls button,
+.path-controls button {
+  background: transparent;
+  border: 1px solid #b9b4ca;
+  color: #f5f1fa;
+  min-height: 44px;
+  padding: 10px 21px;
+  border-radius: 28px;
+  font-size: 13px;
+}
+.preset-buttons {
+  display: flex;
+  gap: 8px;
+}
+.exhibit-controls button[aria-pressed='true'],
+.path-controls button[aria-pressed='true'] {
+  background: #e7ddff;
+  color: #201431;
+}
+.exhibit-controls button:hover,
+.path-controls button:hover {
+  border-color: #95edee;
+  text-decoration: underline;
+}
+.exhibit-controls :focus-visible,
+.path-controls :focus-visible,
+.exhibition-footer a:focus-visible {
+  outline: 2px solid #95edee;
+  outline-offset: 5px;
+}
+.angle-control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font: 10px var(--mono);
+  color: #b9b4ca;
+}
+.angle-control input {
+  width: 120px;
+  accent-color: #95edee;
+  min-height: 44px;
+}
+.angle-control output {
+  min-width: 34px;
+}
+.control-hint {
+  width: 100%;
+  text-align: center;
+  color: #b9b4ca;
+  font-size: 12px;
+}
+.chapter-common .chapter-heading {
+  margin-top: 100px;
+}
+.chapter-common .scene-slot {
+  height: 760px;
+}
+.chapter-common .chapter-heading p {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.path-controls {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 20px;
+  padding-bottom: 50px;
+}
+.path-controls button {
+  flex: 1;
+  text-align: left;
+  border-radius: 0;
+  border-width: 0 0 1px;
+  padding: 16px 0;
+  display: flex;
+  justify-content: space-between;
+}
+.chapter-afterglow {
+  text-align: center;
+}
+.chapter-afterglow .chapter-heading {
+  margin-top: 110px;
+}
+.chapter-afterglow .chapter-heading p {
+  margin: 30px auto;
+}
+.chapter-afterglow .scene-slot {
+  height: 510px;
+  margin-top: -35px;
+}
+.chapter-afterglow .scene-word {
+  left: 0;
+  right: 0;
+}
+.exhibition-footer {
+  position: relative;
+  z-index: 2;
+  padding: 40px 0 55px;
+  background: #080910;
+}
+.exhibition-footer > div {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+.exhibition-footer a {
+  padding: 14px 0;
+  display: inline-block;
+  font-size: 16px;
+}
+.exhibition-footer p {
+  color: #b9b4ca;
+  margin: 35px 0 20px;
+  font-size: 13px;
+}
+.exhibition-footer > span {
+  font: 10px var(--mono);
+  color: #b9b4ca;
+}
+.exhibition-noscript {
+  padding: 30px;
+  color: #b9b4ca;
+}
+.exhibition button:disabled {
+  opacity: 0.65;
+  cursor: default;
+}
+@media (max-width: 850px) {
+  .chapter-heading {
+    margin-top: 65px;
+  }
+  .chapter h2 {
+    font-size: clamp(44px, 8.5vw, 76px);
+  }
+  .chapter-trace .chapter-heading p {
+    margin: 25px 0 0;
+  }
+  .chapter-trace .chapter-heading {
+    margin-bottom: 0;
+  }
+  .chapter-common .chapter-heading p {
+    position: static;
+  }
+  .chapter-perspective .chapter-heading {
+    display: block;
+  }
+  .chapter-perspective .chapter-heading p {
+    margin: 25px 0 0;
+  }
+  .scene-slot,
+  .chapter-trace .scene-slot,
+  .chapter-perspective .scene-slot,
+  .chapter-common .scene-slot {
+    height: 540px;
+  }
+  .chapter-chamber .scene-track {
+    height: 750px;
+  }
+  .chapter-chamber .scene-slot {
+    height: 540px;
+  }
+  .path-controls {
+    gap: 15px;
+  }
+  .path-controls button {
+    font-size: 12px;
+  }
+}
+@media (max-width: 600px) {
+  .chapter {
+    padding-top: 25px;
+  }
+  .chapter-bar {
+    font-size: 9px;
+  }
+  .chapter-bar > span:last-child {
+    display: none;
+  }
+  .chapter-heading,
+  .chapter-common .chapter-heading,
+  .chapter-afterglow .chapter-heading {
+    margin-top: 55px;
+  }
+  .chapter h2 {
+    font-size: clamp(40px, 10.5vw, 62px);
+  }
+  .chapter-heading p {
+    font-size: 15px;
+    max-width: 290px;
+  }
+  .scene-slot,
+  .chapter-trace .scene-slot,
+  .chapter-perspective .scene-slot,
+  .chapter-common .scene-slot {
+    height: 430px;
+  }
+  .chapter-chamber .scene-track {
+    height: auto;
+    margin-top: 10px;
+  }
+  .chapter-chamber .scene-slot {
+    position: relative;
+    height: 480px;
+  }
+  .chapter-afterglow .scene-slot {
+    height: 330px;
+  }
+  .chapter-bottom {
+    font-size: 8px;
+  }
+  .exhibit-controls {
+    padding: 20px 0;
+    gap: 17px;
+    margin-bottom: 35px;
+  }
+  .preset-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+  .exhibit-controls button {
+    padding: 10px 17px;
+  }
+  .path-controls {
+    flex-direction: column;
+    gap: 0;
+  }
+  .path-controls button {
+    padding: 16px 6px;
+  }
+  .scene-word {
+    font-size: 23vw;
+  }
+  .scene-coordinate {
+    font-size: 9px;
+  }
+  .exhibition-footer > div {
+    gap: 25px;
+  }
+  .exhibition-footer a {
+    font-size: 13px;
+  }
+  .exhibition-footer p {
+    line-height: 1.8;
+  }
+  .exhibition-footer > span {
+    font-size: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .exhibition {
+    scroll-behavior: auto;
+  }
+  .exhibition html {
+    scroll-behavior: auto;
+  }
+  .chapter-chamber .scene-track {
+    height: auto;
+  }
+  .chapter-chamber .scene-slot {
+    position: relative;
+  }
+  html:has(.exhibition) {
+    scroll-behavior: auto;
+  }
+}
+
+/* A shared light axis carries the Chamber aperture into the aligned exhibit. */
+.chapter-chamber .chapter-bottom {
+  padding-bottom: 24px;
+}
+.chapter-perspective .chapter-bar {
+  border-top-color: #9665b74a;
+}
+.chapter-perspective .scene-word,
+.chapter-afterglow .scene-word {
+  display: none;
+}
+.path-controls button[aria-pressed='true'] {
+  padding-inline: 18px;
+}
+.path-controls button[aria-pressed='true'] span {
+  transform: rotate(-45deg);
+}
+.path-controls button,
+.path-controls button span {
+  transition:
+    background-color 180ms,
+    color 180ms,
+    transform 180ms;
+}
+@media (max-width: 600px) {
+  .chapter-bar {
+    font-size: 10px;
+  }
+  .chapter-bottom {
+    font-size: 9px;
+    letter-spacing: 0.055em;
+  }
+  .chapter-heading p {
+    margin-top: 22px;
+  }
+  .chapter-trace .scene-slot {
+    height: 370px;
+  }
+  .chapter-perspective .scene-slot {
+    height: 390px;
+  }
+  .chapter-common .scene-slot {
+    height: 470px;
+    margin-top: -20px;
+  }
+  .chapter-afterglow .scene-slot {
+    height: 350px;
+    margin-top: -20px;
+  }
+  .chapter-chamber .chapter-heading {
+    margin-top: 55px;
+  }
+  .chapter-perspective .chapter-heading {
+    margin-top: 45px;
+  }
+  .chapter-common .chapter-heading {
+    margin-top: 50px;
+  }
+  .scene-coordinate {
+    bottom: 20px;
+  }
+  .exhibit-controls {
+    column-gap: 22px;
+    row-gap: 12px;
+  }
+  .exhibition-footer {
+    padding-top: 20px;
+  }
+  .exhibition-footer > span {
+    font-size: 9px;
+    letter-spacing: 0.02em;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .path-controls button,
+  .path-controls button span {
+    transition: none;
+  }
+}
+
+.chapter-perspective::before {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  left: 15%;
+  right: 15%;
+  top: -300px;
+  height: 650px;
+  background: radial-gradient(ellipse, #74398c0d, transparent 68%);
+}
+@media (min-width: 851px) {
+  .chapter-perspective .scene-track {
+    margin-top: -40px;
+  }
+}

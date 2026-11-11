@@ -1,5 +1,12 @@
 ---
 import '../styles/global.css';
+interface Props {
+  exhibition?: boolean;
+}
+const { exhibition = false } = Astro.props;
+const description = exhibition
+  ? 'An interactive visual exhibition of spatial sound. Follow a trace, enter a resonance chamber, and change your point of view.'
+  : 'AFTERTONE is a spatial-audio collaboration concept. Explore a shared visual field for sound, try source placement, and discover a different way to review a scene.';
 ---
 
 <!doctype html>
@@ -7,16 +14,10 @@ import '../styles/global.css';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#141820" />
-    <meta
-      name="description"
-      content="AFTERTONE is a spatial-audio collaboration concept. Explore a shared visual field for sound, try source placement, and discover a different way to review a scene."
-    />
+    <meta name="theme-color" content={exhibition ? '#080910' : '#141820'} />
+    <meta name="description" content={description} />
     <meta property="og:title" content="AFTERTONE — Give sound a sense of place" />
-    <meta
-      property="og:description"
-      content="A shared space for spatial sound. Explore the interactive frontend concept."
-    />
+    <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link
@@ -28,7 +29,7 @@ import '../styles/global.css';
     />
     <title>AFTERTONE — Give sound a sense of place</title>
   </head>
-  <body>
+  <body class:list={[exhibition && 'exhibition']}>
     <a class="skip-link" href="#main">
       Skip to content
     </a>

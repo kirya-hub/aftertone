@@ -1,13 +1,19 @@
 ---
 import Brand from './Brand.astro';
+interface Props {
+  exhibition?: boolean;
+}
+const { exhibition = false } = Astro.props;
 ---
 
 <header class="header wrap">
   <Brand />
   <nav class="desktop-nav" aria-label="Main navigation">
-    <a href="#approach">The approach</a>
-    <a href="#experience">In space</a>
-    <a href="#capabilities">Capabilities</a>
+    <a href="#approach">{exhibition ? 'The trace' : 'The approach'}</a>
+    <a href="#experience">{exhibition ? 'The chamber' : 'In space'}</a>
+    <a href={exhibition ? '#common-ground' : '#capabilities'}>
+      {exhibition ? 'Common ground' : 'Capabilities'}
+    </a>
   </nav>
   <a class="header-cta" href="#demo">
     Enter the playground <span aria-hidden="true">↗</span>
@@ -18,11 +24,13 @@ import Brand from './Brand.astro';
       <span></span>
     </summary>
     <nav aria-label="Mobile navigation">
-      <a href="#approach">The approach</a>
-      <a href="#experience">In space</a>
+      <a href="#approach">{exhibition ? 'The trace' : 'The approach'}</a>
+      <a href="#experience">{exhibition ? 'The chamber' : 'In space'}</a>
       <a href="#demo">The playground ↗</a>
-      <a href="#capabilities">Capabilities</a>
-      <a href="#faq">Questions</a>
+      <a href={exhibition ? '#common-ground' : '#capabilities'}>
+        {exhibition ? 'Common ground' : 'Capabilities'}
+      </a>
+      <a href={exhibition ? '#afterglow' : '#faq'}>{exhibition ? 'Afterglow' : 'Questions'}</a>
     </nav>
   </details>
 </header>

@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import { clampAngle, togglePath, presets } from './state.ts';
+assert.equal(clampAngle(-200), -65);
+assert.equal(clampAngle(200), 65);
+assert.equal(clampAngle(NaN), 0);
+assert.equal(clampAngle(34), 34);
+for (const p of presets) assert.equal(clampAngle(p.angle), p.angle);
+assert.equal(togglePath(-1, 1), 1);
+assert.equal(togglePath(1, 1), -1);
+assert.equal(togglePath(1, 5), 1);
+assert.equal(togglePath(1, 0), 0);
+console.log('Perspective bounds, presets, selection toggle and invalid input: passed');

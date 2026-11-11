@@ -1,56 +1,684 @@
 ---
-import SpatialField from './SpatialField.astro';
+import { Picture } from 'astro:assets';
+import resonance from '../assets/hero/neon-resonance.png';
+import refined from '../assets/hero/refined-resonance.png';
+import experimental from '../assets/hero/experimental-resonator.png';
+
+interface Props {
+  variant?: 'a' | 'b';
+}
+const { variant } = Astro.props;
+const artwork = variant === 'a' ? refined : variant === 'b' ? experimental : resonance;
 ---
 
-<section class="hero wrap" aria-labelledby="hero-title">
-  <div class="hero-topline mono">
-    <span>
-      <i class="status-dot"></i> A SHARED SPACE FOR SPATIAL SOUND
-    </span>
-    <span class="hero-edition">INDEPENDENT BY DESIGN. IMMERSIVE BY NATURE.</span>
+<section class="hero hero-neon" data-variant={variant} aria-labelledby="hero-title">
+  <div class="resonance-scene" aria-hidden="true">
+    <div class="resonance-depth">
+      <Picture
+        src={artwork}
+        formats={['avif', 'webp']}
+        fallbackFormat="jpg"
+        widths={[480, 800, 1254]}
+        sizes="(max-width: 600px) 116vw, (max-width: 1000px) 95vw, 76vw"
+        alt=""
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+        quality={85}
+        class="resonance-image"
+      />
+    </div>
   </div>
-  <div class="hero-body">
-    <div class="hero-copy">
+  <div class="neon-content wrap">
+    <div class="neon-topline mono">
+      <span>
+        <i class="neon-dot"></i>A SHARED SPACE FOR SPATIAL SOUND
+      </span>
+      <span class="neon-edition">A NEW DIMENSION OF WORKING TOGETHER</span>
+    </div>
+    <div class="hero-copy neon-copy">
       <h1 id="hero-title">
         <span>Give sound</span>
         <span>a sense</span>
         <span>
-          of&nbsp;<em>place.</em>
+          of <em>place.</em>
         </span>
       </h1>
-      <p>
-        Sound doesn’t live on a line.
+      <p class="neon-description">
+        Shape the sound. Share the space.
         <br />
-        Neither should the conversation.
+        Find your next dimension, together.
       </p>
-      <a class="button button-coral" href="#demo">
+      <a class="button neon-button" href="#demo">
         Explore the playground <span aria-hidden="true">↗</span>
       </a>
-      <span class="hero-note mono">A VISUAL PROTOTYPE. OPEN TO EXPLORATION.</span>
+      <span class="hero-note neon-note mono">AN INTERACTIVE CONCEPT. MADE TO BE EXPLORED.</span>
     </div>
-    <div class="hero-art">
-      <div class="field-heading mono">
-        <span>FIELD 001 — THE LISTENING ROOM</span>
-        <span class="cross">+</span>
-      </div>
-      <SpatialField />
-      <div class="field-caption mono">
-        <span>
-          <i class="tiny-square"></i> EVERY SOUND HAS A SOMEWHERE.
-        </span>
-        <span>X / Y / Z</span>
-      </div>
+    <div class="resonance-label mono" aria-hidden="true">
+      <span class="resonance-label-line"></span>
+      <span>
+        RESONANCE 001<span class="resonance-label-sub">SOUND, GIVEN FORM.</span>
+      </span>
     </div>
-  </div>
-  <div class="hero-bottom">
-    <a href="#approach" class="scroll-cue">
-      <span aria-hidden="true">↓</span> SCROLL TO FIND YOUR PERSPECTIVE
+    <a class="neon-session" href="#demo" aria-label="Explore the shared spatial-audio playground">
+      <span class="session-glyph" aria-hidden="true">
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+      </span>
+      <div>
+        <span class="session-title">One space. Every perspective.</span>
+        <span class="session-meta mono">CREATE · PLACE · COLLABORATE</span>
+      </div>
+      <span class="session-orbit" aria-hidden="true">
+        ↗
+      </span>
     </a>
-    <p>
-      For sound designers, game worlds,
-      <br />
-      and stories you can step inside.
-    </p>
-    <span class="mono hero-coordinate">SPATIAL THINKING / HUMAN CONNECTION</span>
+    <div class="neon-bottom">
+      <a href="#approach" class="neon-scroll mono">
+        <span aria-hidden="true">↓</span> STEP INSIDE THE SOUND
+      </a>
+      <p>
+        For sound designers. World builders.
+        <br />
+        Anyone who hears things differently.
+      </p>
+      <span class="neon-bottom-caption mono">LESS TIMELINE. MORE POSSIBILITY.</span>
+    </div>
   </div>
 </section>
+
+<style>
+  /* Keep this visual prototype local to the first screen. */
+  :global(.header) {
+    background: #090014;
+    border-color: #cab0ff26;
+  }
+  :global(.header)::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #090014;
+    box-shadow: 0 0 0 100vmax #090014;
+    clip-path: inset(0 -100vmax);
+    z-index: -1;
+  }
+  :global(.header .brand svg) {
+    color: #00f5d4;
+  }
+  :global(.header-cta) {
+    border-color: #a58bb94d;
+    border-radius: 100px;
+  }
+  :global(.header-cta:hover) {
+    background: #00f5d4;
+  }
+  .hero-neon {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    background: #090014;
+    color: #f7f1ff;
+    min-height: 796px;
+    min-height: max(796px, calc(100svh - 104px));
+  }
+  .neon-content {
+    position: relative;
+    min-height: inherit;
+    display: flex;
+    flex-direction: column;
+  }
+  .resonance-scene {
+    position: absolute;
+    width: min(76vw, 1240px);
+    aspect-ratio: 1;
+    right: -5%;
+    top: -13%;
+    z-index: -2;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse at center, #000 50%, transparent 73%);
+  }
+  .resonance-depth {
+    width: 100%;
+    height: 100%;
+  }
+  .resonance-scene picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .resonance-scene .resonance-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .hero-neon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background: linear-gradient(90deg, #090014b8 0%, #09001428 42%, transparent 62%);
+  }
+  .neon-topline {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding-top: 30px;
+    color: #b9a6cf;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+  }
+  .neon-topline > span:first-child {
+    color: #e0d3ee;
+  }
+  .neon-dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin: 0 10px 2px 0;
+    border-radius: 50%;
+    background: #00f5d4;
+    box-shadow: 0 0 10px #00f5d45c;
+  }
+  .hero-copy.neon-copy {
+    padding: 0;
+    margin-top: 78px;
+    width: 640px;
+    z-index: 2;
+  }
+  .hero-neon h1 {
+    font-size: clamp(90px, 8.2vw, 138px);
+    line-height: 0.96;
+    font-weight: 750;
+    letter-spacing: -0.071em;
+  }
+  .hero-neon h1 > span {
+    display: block;
+  }
+  .hero-neon h1 em {
+    margin-inline-start: 0;
+    font-weight: inherit;
+    color: #a2f4ed;
+    background: linear-gradient(110deg, #e1b0ff 0%, #b5b7ff 38%, #63f5e4 90%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-copy > .neon-description {
+    margin-top: 29px;
+    color: #c3b7d0;
+    font-size: 15px;
+    line-height: 1.8;
+    letter-spacing: -0.01em;
+  }
+  .hero-neon .neon-button {
+    margin-top: 27px;
+    border: 1px solid #a7fff0;
+    border-radius: 100px;
+    min-height: 54px;
+    padding: 0 24px;
+    gap: 28px;
+    color: #090d17;
+    background: #8df5de;
+    box-shadow: 0 4px 30px #00f5d414;
+    font-size: 12px;
+    font-weight: 750;
+  }
+  .hero-neon .neon-button:hover {
+    background: #c1ffef;
+    transform: translateY(-2px);
+  }
+  .hero-neon a:focus-visible {
+    outline-color: #00f5d4;
+  }
+  .hero-neon .neon-note {
+    margin-top: 17px;
+    color: #a595b6;
+    font-size: 8px;
+  }
+  .resonance-label {
+    position: absolute;
+    right: 1%;
+    top: 39%;
+    display: flex;
+    gap: 15px;
+    color: #e1c8f5;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+  }
+  .resonance-label-line {
+    width: 37px;
+    height: 1px;
+    margin-top: 7px;
+    background: #dca3f9a1;
+  }
+  .resonance-label-sub {
+    display: block;
+    color: #b4a0c9;
+    margin-top: 5px;
+    font-size: 7px;
+  }
+  .neon-session {
+    position: absolute;
+    bottom: 151px;
+    right: 2%;
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    padding: 17px 20px;
+    border: 1px solid #dbc1ff38;
+    border-radius: 16px;
+    background: #1a0a2bc9;
+    backdrop-filter: blur(18px);
+    box-shadow:
+      inset 0 1px 0 #ffffff0d,
+      0 12px 50px #09001466;
+    transform: rotate(-4deg);
+  }
+  .session-title {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .session-meta {
+    display: block;
+    font-size: 7px;
+    color: #bda8d2;
+    margin-top: 6px;
+  }
+  .session-glyph {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 30px;
+  }
+  .session-glyph i {
+    width: 3px;
+    height: 13px;
+    border-radius: 5px;
+    background: #8df5de;
+  }
+  .session-glyph i:nth-child(2),
+  .session-glyph i:nth-child(4) {
+    height: 23px;
+  }
+  .session-glyph i:nth-child(3) {
+    height: 32px;
+  }
+  .session-orbit {
+    width: 27px;
+    height: 27px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #d6b8f34d;
+    border-radius: 50%;
+    color: #e1c8f5;
+    margin-left: 10px;
+  }
+  .neon-bottom {
+    margin-top: auto;
+    padding-block: 23px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    border-top: 1px solid #cfb6ed26;
+  }
+  .neon-scroll {
+    font-size: 8px;
+    display: flex;
+    gap: 13px;
+    align-items: center;
+    color: #c6b6d7;
+  }
+  .neon-scroll > span {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #a288ba66;
+    font-size: 14px;
+    transition: transform 0.2s;
+  }
+  .neon-scroll:hover > span {
+    transform: translateY(3px);
+  }
+  .neon-bottom p {
+    font-size: 11px;
+    line-height: 1.7;
+    color: #a99ab9;
+  }
+  .neon-bottom-caption {
+    font-size: 8px;
+    color: #a99ab9;
+  }
+  @media (min-width: 1800px) {
+    .resonance-scene {
+      right: calc((100vw - 1800px) / 2 - 90px);
+      top: -80px;
+    }
+  }
+  @media (min-width: 601px) and (max-width: 1000px) {
+    .hero-neon {
+      min-height: 760px;
+    }
+    .hero-copy.neon-copy {
+      width: 75%;
+      margin-top: 100px;
+    }
+    .hero-neon h1 {
+      font-size: 10vw;
+    }
+    .resonance-scene {
+      width: 95vw;
+      top: 0;
+      right: -24%;
+    }
+    .neon-edition,
+    .resonance-label,
+    .neon-bottom-caption {
+      display: none;
+    }
+    .neon-session {
+      right: 0;
+      bottom: 120px;
+    }
+  }
+  @media (max-width: 600px) {
+    .hero-neon {
+      min-height: 770px;
+      min-height: max(770px, calc(100svh - 78px));
+    }
+    .neon-topline {
+      padding-top: 22px;
+      font-size: 7px;
+      gap: 0;
+      letter-spacing: 0.09em;
+    }
+    .neon-edition {
+      display: none;
+    }
+    .hero-copy.neon-copy {
+      margin-top: 27px;
+      width: 100%;
+    }
+    .hero-neon h1 {
+      font-size: clamp(44px, 12.7vw, 76px);
+      line-height: 1;
+      letter-spacing: -0.065em;
+    }
+    .hero-neon h1 > span:nth-child(2),
+    .hero-neon h1 > span:nth-child(3) {
+      display: inline;
+    }
+    .resonance-scene {
+      width: 116vw;
+      right: -17%;
+      top: 143px;
+      mask-image: radial-gradient(ellipse at center, #000 52%, transparent 73%);
+    }
+    .hero-neon::after {
+      background: linear-gradient(180deg, #09001400 49%, #090014b3 72%, #090014 86%);
+    }
+    .hero-copy > .neon-description {
+      margin-top: 340px;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .hero-neon .neon-button {
+      margin-top: 19px;
+      min-height: 50px;
+      gap: 35px;
+    }
+    .hero-neon .neon-note {
+      font-size: 6px;
+      margin-top: 13px;
+      letter-spacing: 0.05em;
+    }
+    .resonance-label {
+      display: none;
+    }
+    .neon-session {
+      /* The full-height copy plane must not intercept this independent link. */
+      z-index: 3;
+      top: 425px;
+      bottom: auto;
+      right: 0;
+      padding: 11px 13px;
+      gap: 11px;
+      border-radius: 11px;
+      transform: rotate(-4deg);
+    }
+    .session-title {
+      font-size: 10px;
+    }
+    .session-meta {
+      font-size: 6px;
+      margin-top: 4px;
+    }
+    .session-glyph {
+      transform: scale(0.8);
+    }
+    .session-orbit {
+      display: none;
+    }
+    .neon-bottom {
+      padding-block: 18px;
+      margin-top: 30px;
+    }
+    .neon-scroll {
+      font-size: 7px;
+      gap: 9px;
+    }
+    .neon-scroll > span {
+      width: 25px;
+      height: 25px;
+    }
+    .neon-bottom p,
+    .neon-bottom-caption {
+      display: none;
+    }
+  }
+  @media (max-width: 374px) {
+    .hero-neon {
+      min-height: 730px;
+    }
+    .resonance-scene {
+      top: 140px;
+    }
+    .hero-copy > .neon-description {
+      margin-top: 306px;
+    }
+    .neon-session {
+      top: 390px;
+    }
+    .neon-bottom {
+      margin-top: 25px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-neon a,
+    .neon-scroll > span {
+      transition: none;
+    }
+  }
+</style>
+
+<style>
+  /* Only the two review routes receive these semantic Hero tokens. */
+  :global(body:has(.hero[data-variant='a'])) {
+    --hero-bg: #0d0b14;
+    --hero-surface: #1c1728;
+    --hero-text: #f4f0fa;
+    --hero-muted: #b5abbf;
+    --hero-action: #9be7d9;
+    --hero-material: #7763a6;
+    --hero-reflection: #d46aa5;
+  }
+  :global(body:has(.hero[data-variant='b'])) {
+    --hero-bg: #101512;
+    --hero-surface: #202820;
+    --hero-text: #f2efdf;
+    --hero-muted: #b4bbaa;
+    --hero-action: #d9f270;
+    --hero-material: #537566;
+    --hero-reflection: #d48b58;
+  }
+  /* Blend the existing top navigation into the scene, preserving its layout. */
+  :global(body:has(.hero[data-variant]) .header),
+  :global(body:has(.hero[data-variant]) .header::before) {
+    color: var(--hero-text);
+    background: var(--hero-bg);
+    border-color: color-mix(in srgb, var(--hero-muted) 22%, transparent);
+  }
+  :global(body:has(.hero[data-variant]) .header::before) {
+    box-shadow: 0 0 0 100vmax var(--hero-bg);
+  }
+  :global(body:has(.hero[data-variant]) .header .brand svg),
+  :global(body:has(.hero[data-variant]) .desktop-nav a:hover) {
+    color: var(--hero-action);
+  }
+  :global(body:has(.hero[data-variant]) .header-cta) {
+    border-color: var(--hero-muted);
+  }
+  :global(body:has(.hero[data-variant]) .header-cta:hover) {
+    color: var(--hero-bg);
+    background: var(--hero-action);
+  }
+  :global(body:has(.hero[data-variant]) .header a:focus-visible),
+  :global(body:has(.hero[data-variant]) .header summary:focus-visible) {
+    outline-color: var(--hero-action);
+  }
+  .hero[data-variant] {
+    color: var(--hero-text);
+    background: var(--hero-bg);
+  }
+  .hero[data-variant]::after {
+    background: linear-gradient(
+      90deg,
+      var(--hero-bg) 0%,
+      color-mix(in srgb, var(--hero-bg) 92%, transparent) 27%,
+      color-mix(in srgb, var(--hero-bg) 25%, transparent) 48%,
+      transparent 65%
+    );
+  }
+  .hero[data-variant] .resonance-scene {
+    width: min(76vw, 1240px);
+    right: -4%;
+    top: -10%;
+  }
+  .hero[data-variant] h1 em {
+    color: var(--hero-text);
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
+  .hero[data-variant] .neon-topline,
+  .hero[data-variant] .neon-topline > span:first-child,
+  .hero[data-variant] .neon-description,
+  .hero[data-variant] .neon-note,
+  .hero[data-variant] .resonance-label-sub,
+  .hero[data-variant] .session-meta,
+  .hero[data-variant] .neon-scroll,
+  .hero[data-variant] .neon-bottom p,
+  .hero[data-variant] .neon-bottom-caption {
+    color: var(--hero-muted);
+  }
+  .hero[data-variant] .neon-dot,
+  .hero[data-variant] .session-glyph i {
+    background: var(--hero-action);
+    box-shadow: none;
+  }
+  .hero[data-variant] .neon-button {
+    background: var(--hero-action);
+    color: var(--hero-bg);
+    border-color: var(--hero-action);
+    box-shadow: none;
+  }
+  .hero[data-variant] .neon-button:hover {
+    background: color-mix(in srgb, var(--hero-action) 85%, white);
+  }
+  .hero[data-variant] .neon-button:active {
+    transform: translateY(0);
+  }
+  .hero[data-variant] a:focus-visible {
+    outline: 2px solid var(--hero-action);
+    outline-offset: 5px;
+  }
+  .hero[data-variant] .resonance-label {
+    top: 80px;
+    color: var(--hero-text);
+  }
+  .hero[data-variant] .resonance-label-line {
+    background: var(--hero-material);
+  }
+  .hero[data-variant] .neon-session {
+    color: var(--hero-text);
+    background: var(--hero-surface);
+    border-color: var(--hero-muted);
+    box-shadow: inset 0 1px 0 #ffffff0d;
+  }
+  .hero[data-variant] .neon-session:hover {
+    border-color: var(--hero-action);
+  }
+  .hero[data-variant] .session-orbit {
+    color: var(--hero-text);
+    border-color: var(--hero-muted);
+  }
+  .hero[data-variant] .neon-bottom {
+    border-color: color-mix(in srgb, var(--hero-muted) 22%, transparent);
+  }
+  .hero[data-variant] .neon-scroll > span {
+    border-color: var(--hero-muted);
+  }
+  @media (min-width: 1001px) {
+    .hero[data-variant]::after {
+      /* Keep the small edge captions readable over bright artwork reflections. */
+      background:
+        linear-gradient(
+          180deg,
+          color-mix(in srgb, var(--hero-bg) 72%, transparent) 0%,
+          transparent 14%,
+          transparent 84%,
+          color-mix(in srgb, var(--hero-bg) 85%, transparent) 94%,
+          var(--hero-bg) 100%
+        ),
+        linear-gradient(
+          90deg,
+          var(--hero-bg) 0%,
+          color-mix(in srgb, var(--hero-bg) 92%, transparent) 27%,
+          color-mix(in srgb, var(--hero-bg) 25%, transparent) 48%,
+          transparent 65%
+        );
+    }
+  }
+  @media (min-width: 601px) and (max-width: 1000px) {
+    .hero[data-variant] .resonance-scene {
+      width: 95vw;
+      top: 0;
+      right: -24%;
+    }
+  }
+  @media (max-width: 600px) {
+    .hero[data-variant] .resonance-scene {
+      width: 116vw;
+      right: -17%;
+      top: 143px;
+    }
+    .hero[data-variant]::after {
+      background: linear-gradient(
+        180deg,
+        transparent 49%,
+        color-mix(in srgb, var(--hero-bg) 70%, transparent) 72%,
+        var(--hero-bg) 86%
+      );
+    }
+  }
+  @media (max-width: 374px) {
+    .hero[data-variant] .resonance-scene {
+      top: 140px;
+    }
+  }
+</style>
